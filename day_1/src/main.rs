@@ -1,30 +1,23 @@
-use std::{fs, str::FromStr};
 use itertools::Itertools;
+use std::{fs, str::FromStr};
 
-struct Elf<'a> {
-    lines: Vec<&'a str>,
-}
-
-impl Elf<'_> {
-    pub fn total(&self) -> usize {
-        self.lines
-            .iter()
-            .map(|line| FromStr::from_str(line).unwrap_or(0)) // Account for blank lines
-            .reduce(|acc: usize, line| acc + line)
-            .unwrap()
-    }
+pub fn total(lines: Vec<&str>) -> usize {
+    lines
+        .iter()
+        .map(|line| FromStr::from_str(line).unwrap_or(0)) // Account for blank lines
+        .sum()
 }
 
 fn main() {
-    let max: Vec<usize> = fs::read_to_string("input.txt")
+    let max_calories: usize = fs::read_to_string("input.txt")
         .unwrap()
         .split("\n\n")
         .map(|line| line.split('\n').collect())
-        .map(|lines| Elf { lines }.total())
+        .map(total)
         .sorted()
-        .collect();
+        .rev()
+        .take(3)
+        .sum();
 
-    let max: &usize = &max[max.len() - 3 .. max.len()].iter().sum();
-
-    println!("{max}");
+    println!("{max_calories}");
 }
