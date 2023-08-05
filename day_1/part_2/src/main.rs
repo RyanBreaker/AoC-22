@@ -20,8 +20,7 @@ fn main() {
         .unwrap()
         .split("\n\n")
         .map(|line| line.split('\n').collect())
-        .map(|lines| Elf { lines })
-        .map(|elf| elf.total())
+        .map(|lines| Elf { lines }.total())
         .sorted()
         .collect();
 

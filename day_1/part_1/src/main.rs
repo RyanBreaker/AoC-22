@@ -15,7 +15,7 @@ impl Elf<'_> {
 }
 
 fn main() {
-    let max = fs::read_to_string("input.txt")
+    let max: usize = fs::read_to_string("input.txt")
         .unwrap()
         .split("\n\n")
         .map(|line| line.split('\n').collect())
