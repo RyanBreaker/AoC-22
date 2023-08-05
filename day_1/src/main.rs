@@ -1,7 +1,7 @@
 use itertools::Itertools;
 use std::{fs, str::FromStr};
 
-pub fn total(lines: Vec<&str>) -> usize {
+fn total(lines: Vec<&str>) -> usize {
     lines
         .iter()
         .map(|line| FromStr::from_str(line).unwrap_or(0)) // Account for blank lines
