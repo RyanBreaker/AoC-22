@@ -1,4 +1,5 @@
 use std::{fs, str::FromStr};
+use itertools::Itertools;
 
 struct Elf<'a> {
     lines: Vec<&'a str>,
@@ -15,14 +16,16 @@ impl Elf<'_> {
 }
 
 fn main() {
-    let max = fs::read_to_string("input.txt")
+    let max: Vec<usize> = fs::read_to_string("input.txt")
         .unwrap()
         .split("\n\n")
         .map(|line| line.split('\n').collect())
         .map(|lines| Elf { lines })
         .map(|elf| elf.total())
-        .max()
-        .unwrap();
+        .sorted()
+        .collect();
+
+    let max: &usize = &max[max.len() - 3 .. max.len()].iter().sum();
 
     println!("{max}");
 }
